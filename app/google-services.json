@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695726679729",
+    "project_id": "aplicacionguarderia",
+    "storage_bucket": "aplicacionguarderia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695726679729:android:f7859556a9bb52061c6490",
+        "android_client_info": {
+          "package_name": "com.example.aplicacionguarderia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695726679729-cieasj0ufoq6ubopr557d8vsou3kmdvs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMjhGxZCa48PX591P7HQ8Q2xkiQYlU5-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695726679729-cieasj0ufoq6ubopr557d8vsou3kmdvs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
