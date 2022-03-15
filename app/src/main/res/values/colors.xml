@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="primaryblack">#3262C4</color>
-    <color name="black">#000000</color>
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#C11515</color>
     <color name="grisclaro">#E3DBD3 </color>
     <color name="naranja">#FE982C</color>
     <color name="negroclaro">#84817D </color>
+    <color name="lightwhite">#D2D2D2 </color>
+    <color name="card1">#A3E407 </color>
+    <color name="card2">#F9E79F </color>
+    <color name="card3">#D7BDE2 </color>
+    <color name="card4">#D2C3D8 </color>
+
+
 
 </resources>

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">AplicacionGuarderia</string>
+
+    <string name="children_text">Niños</string>
+    <string name="menu_text">Menu</string>
+    <string name="earnings_text">Ganancias</string>
+    <string name="home_text">Inicio</string>
+    <string name="search_text">Search</string>
+    <string name="log_out_text">Cerrar sesion</string>
+    <string name="login_text">Iniciar sesion</string>
+    <string name="mail_text">Correo electronico</string>
+    <string name="password_text">Contraseña</string>
+    <string name="dont_have_account_text">¿No tienes una cuenta?</string>
+    <string name="sign_up_text">Registrarse</string>
+    <string name="forgot_password_text">¿Olvidaste la contraseña?</string>
 </resources>

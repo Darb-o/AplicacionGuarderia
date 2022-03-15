@@ -37,13 +37,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
-        dontHaveAccount = (TextView) findViewById(R.id.dontHaveAccount);
+        dontHaveAccount = findViewById(R.id.dontHaveAccount);
         dontHaveAccount.setOnClickListener(this::onClick);
-        forgetPassword = (TextView) findViewById(R.id.forgetPassword);
+        forgetPassword = findViewById(R.id.forgetPassword);
         forgetPassword.setOnClickListener(this::onClick);
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this::onClick);
         bd = FirebaseFirestore.getInstance();
         user = mAuth.getCurrentUser();
@@ -73,16 +73,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void checkUser(){
         user = mAuth.getCurrentUser();
-        bd.collection("users").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    String tipo = documentSnapshot.getString("tipo");
-                    if(tipo.equals("usuario")){
-                        startActivity(new Intent(LoginActivity.this,MainPageUsersActivity.class));
-                    }else{
-                        startActivity(new Intent(LoginActivity.this,MainPageActivity.class));
-                    }
+        bd.collection("users").document(user.getUid()).get().addOnSuccessListener((DocumentSnapshot documentSnapshot)->{
+            if(documentSnapshot.exists()){
+                String tipo = documentSnapshot.getString("tipo");
+                if(tipo!=null && tipo.equals("usuario")){
+                    startActivity(new Intent(LoginActivity.this,MainPageUsersActivity.class));
+                }else{
+                    startActivity(new Intent(LoginActivity.this,MainPageActivity.class));
                 }
             }
         });
@@ -98,13 +95,13 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,"Digite la contraseña",Toast.LENGTH_SHORT).show();
             inputPassword.requestFocus();
         }else{
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
                     if(task.isSuccessful()){
                         Toast.makeText(LoginActivity.this,"Bienvenido",Toast.LENGTH_SHORT).show();
                         checkUser();
                     }else{
+                        Toast.makeText(LoginActivity.this,"Error, intente de nuevo",Toast.LENGTH_SHORT).show();
                         Log.w("TAB","Error",task.getException());
                     }
                 }

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/staatliches"
-        android:text="Inicio sesion"
+        android:text="@string/login_text"
         android:textColor="@color/naranja"
         android:textSize="34sp"
         android:textStyle="bold"
@@ -29,7 +29,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="40dp"
-        android:hint="Correo"
+        android:hint="@string/mail_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:startIconDrawable="@drawable/ic_email"
         app:endIconMode="clear_text"
@@ -46,6 +46,8 @@
             android:fontFamily="@font/advent_pro_medium"
             android:inputType="textEmailAddress"
             android:textColor="@color/black"
+            android:labelFor="@id/inputEmail"
+            android:autofillHints="emailAddress"
             android:textColorHint="@color/negroclaro" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +60,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:hint="Contraseña"
+        android:hint="@string/password_text"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         app:startIconDrawable="@drawable/ic_lock"
         app:endIconMode="password_toggle"
@@ -74,18 +76,19 @@
             android:background="@drawable/input_bg"
             android:fontFamily="@font/advent_pro_medium"
             android:inputType="textPassword"
+            android:autofillHints="password"
+            android:labelFor="@id/inputPassword"
             android:textColor="@color/black"
             android:textColorHint="@color/negroclaro"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:textAlignment="center"
@@ -98,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/staatliches"
-            android:text="No tienes una cuenta?"
+            android:text="@string/dont_have_account_text"
             android:textColor="@color/negroclaro" />
 
         <TextView
@@ -106,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/staatliches"
-            android:text=" Registrarse."
+            android:text="@string/sign_up_text"
             android:textColor="@color/naranja" />
     </LinearLayout>
 
@@ -117,8 +120,8 @@
         android:layout_marginTop="28dp"
         android:background="@drawable/btn_bg"
         android:fontFamily="@font/staatliches"
-        android:text="Iniciar sesion"
-        android:textSize="20dp"
+        android:text="@string/login_text"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/inputPassword"
@@ -130,9 +133,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/staatliches"
-        android:text="Olvidaste la contraseña?"
+        android:text="@string/forgot_password_text"
         android:textColor="@color/negroclaro"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/inputPassword"
         app:layout_constraintTop_toBottomOf="@+id/inputPassword" />
 
