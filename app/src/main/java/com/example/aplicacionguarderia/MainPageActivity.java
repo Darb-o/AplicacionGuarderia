@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +24,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPageActivity extends AppCompatActivity {
 
@@ -31,6 +38,8 @@ public class MainPageActivity extends AppCompatActivity {
     private FirebaseFirestore bd;
     private BottomNavigationView navigationView;
     private HomeFragment homeFragment = new HomeFragment();
+    private List<ListElement> childrenList;
+    private List<ModelPerson> adultsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +51,19 @@ public class MainPageActivity extends AppCompatActivity {
         loadfragment(homeFragment);
     }
 
-    /*public void onClick(View v){
-        switch(v.getId()){
-        }
-    }*/
-
-
     public void navigationViewListener(){
         navigationView.setOnItemSelectedListener(item -> {
             Fragment fragment;
             switch (item.getItemId()){
                 case R.id.nav_child:
                     fragment = new ChildrenFragment();
-                    loadfragment(fragment);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("childrenlist", (Serializable) childrenList);
+                    bundle.putSerializable("adultslist",(Serializable) adultsList);
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction().replace(R.id.body_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                     break;
                 case R.id.nav_earnings:
                     fragment = new EarningsFragment();
@@ -83,8 +92,53 @@ public class MainPageActivity extends AppCompatActivity {
         if(user == null){
             startActivity(new Intent(MainPageActivity.this,LoginActivity.class));
         }else{
+            fillDataForFragments();
             Toast.makeText(MainPageActivity.this,"Has iniciado sesion",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void fillDataForFragments(){
+        bd.collection("children").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    String name = "", date = "", status = "", color = "", imgUrl = "";
+                    childrenList = new ArrayList<>();
+                    for(QueryDocumentSnapshot document: task.getResult()){
+                        name = document.get("nombre").toString();
+                        date = document.get("fecha_inscripcion").toString();
+                        status = document.get("estado").toString();
+                        imgUrl = document.get("imagen").toString();
+                        if(status.equals("activo")){
+                            color = "#69F13E";
+                        }else{
+                            color = "#F12B10";
+                        }
+                        childrenList.add(new ListElement(color,name,date,status,imgUrl));
+                    }
+                }else{
+                    Toast.makeText(MainPageActivity.this,
+                            "Error al llenar los datos", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        bd.collection("users").get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                adultsList = new ArrayList<>();
+                String name = "", dni = "", tipo = "";
+                for(QueryDocumentSnapshot document: task.getResult()){
+                    name = document.get("nombre").toString();
+                    dni = document.get("dni").toString();
+                    tipo = document.get("tipo").toString();
+                    if(tipo.equals("usuario")){
+                        adultsList.add(new ModelPerson(name,dni));
+                    }
+                }
+            }else{
+                Toast.makeText(MainPageActivity.this,
+                        "Error al llenar los datos", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void signOut(){

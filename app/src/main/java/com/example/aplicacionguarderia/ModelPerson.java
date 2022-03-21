@@ -1,6 +1,8 @@
 package com.example.aplicacionguarderia;
 
-public class ModelPerson {
+import java.io.Serializable;
+
+public class ModelPerson implements Serializable {
     private String name,mail,pass,dni,adress,phone;
 
     public ModelPerson(String name, String mail, String pass, String dni, String adress, String phone) {
@@ -12,12 +14,16 @@ public class ModelPerson {
         this.phone = phone;
     }
 
+    public ModelPerson(String name, String dni){
+        this.name = name;
+        this.dni = dni;
+    }
+
     public boolean check(String data){
         if(data.isEmpty()){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
     public String getName() {
         return name;

@@ -118,16 +118,19 @@ public class RegisterActivity extends AppCompatActivity {
                         userd.put("direccion", userdata.getAdress());
                         userd.put("telefono", userdata.getPhone());
                         userd.put("tipo",type);
-                        documentReference.set(userd).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d("TAB","onSuccess: datos agregados"+userID);
+                        documentReference.set(userd).addOnCompleteListener(task1 -> {
+                            if(task1.isSuccessful()){
+                                Toast.makeText(RegisterActivity.this,"Te has registrado, ahora puedes logearte "
+                                        ,Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
+                            }else{
+                                Toast.makeText(RegisterActivity.this,"Hubo un error al agregar tus datos, " +
+                                        "intentalo de nuevo",Toast.LENGTH_SHORT).show();
+                                mAuth.getCurrentUser().delete();
                             }
                         });
-                        Toast.makeText(RegisterActivity.this,"Usuario registrado con exito",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
                     }else{
-                        Toast.makeText(RegisterActivity.this,"Hubo un error al registrar el usuario "
+                        Toast.makeText(RegisterActivity.this,"Hubo un error al registrarte, por favor intentalo de nuevo "
                                 +task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     }
